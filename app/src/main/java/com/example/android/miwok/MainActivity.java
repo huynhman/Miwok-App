@@ -18,9 +18,16 @@ package com.example.android.miwok;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,53 +37,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
-//        Find numbers view id and store in numbers.
-        TextView numbers = (TextView) findViewById(R.id.numbers);
-//        Set onclickListerner onto numbers object.
-        numbers.setOnClickListener(new View.OnClickListener() {
-//            Method that is carried out when onclickListener is activated on the numbers Textview.
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (MainActivity.this, NumbersActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        //        Find numbers view id and store in family.
-        TextView family = (TextView) findViewById(R.id.family);
-//        Set onclickListerner onto numbers object.
-        family.setOnClickListener(new View.OnClickListener() {
-            //            Method that is carried out when onclickListener is activated on the numbers Textview.
-            @Override
-            public void onClick(View view) {
-                Intent intent2 = new Intent (MainActivity.this, FamilyActivity.class);
-                startActivity(intent2);
-            }
-        });
+//        Setup viewPager
+        ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
 
-        //        Find numbers view id and store in numbers.
-        TextView colors = (TextView) findViewById(R.id.colors);
-//        Set onclickListerner onto numbers object.
-        colors.setOnClickListener(new View.OnClickListener() {
-            //            Method that is carried out when onclickListener is activated on the numbers Textview.
-            @Override
-            public void onClick(View view) {
-                Intent intent3 = new Intent (MainActivity.this, ColorsActivity.class);
-                startActivity(intent3);
-            }
-        });
+//Hookup viewPager to pagerAdapter
+        PagerAdapter pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
 
-        //        Find numbers view id and store in numbers.
-        TextView phrases = (TextView) findViewById(R.id.phrases);
-//        Set onclickListerner onto numbers object.
-        phrases.setOnClickListener(new View.OnClickListener() {
-            //            Method that is carried out when onclickListener is activated on the numbers Textview.
-            @Override
-            public void onClick(View view) {
-                Intent intent4 = new Intent (MainActivity.this, PhrasesActivity.class);
-                startActivity(intent4);
-            }
-        });
+//        Set TabLayout
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+//        Animation for ViewPager
+        viewPager.setPageTransformer(true, new depthPageTransformer());
+
     }
 
 }
